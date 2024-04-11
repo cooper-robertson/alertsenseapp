@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="generator" content="Mobirise v5.9.6, mobirise.com">
+  <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
+  <link rel="shortcut icon" href="assets/images/alertsense-cover-96x96.png" type="image/x-icon">
+  <meta name="description" content="">
+  <title>Control Panel</title>
+  <link rel="stylesheet" href="assets/web/assets/mobirise-icons2/mobirise2.css">
+  <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
+  <link rel="stylesheet" href="assets/bootstrap/css/bootstrap-grid.min.css">
+  <link rel="stylesheet" href="assets/bootstrap/css/bootstrap-reboot.min.css">
+  <link rel="stylesheet" href="assets/animatecss/animate.css">
+  <link rel="stylesheet" href="assets/dropdown/css/style.css">
+  <link rel="stylesheet" href="assets/theme/css/style.css">
+  <link rel="preload" href="https://fonts.googleapis.com/css?family=Inter+Tight:100,200,300,400,500,600,700,800,900,100i,200i,300i,400i,500i,600i,700i,800i,900i&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter+Tight:100,200,300,400,500,600,700,800,900,100i,200i,300i,400i,500i,600i,700i,800i,900i&display=swap"></noscript>
+  <link rel="preload" as="style" href="assets/mobirise/css/mbr-additional.css"><link rel="stylesheet" href="assets/mobirise/css/mbr-additional.css" type="text/css">
+</head>
+<body>
+  <section data-bs-version="5.1" class="menu menu2 cid-tUu7U96mZM" once="menu" id="menu02-22">
+    <nav class="navbar navbar-dropdown navbar-fixed-top navbar-expand-lg">
+      <div class="container">
+        <div class="navbar-brand">
+          <span class="navbar-logo">
+            <a href="index.html">
+              <img src="assets/images/alertsense-cover-96x96.png" alt="Team Alpha" style="height: 3rem;">
+            </a>
+          </span>
+          <span class="navbar-caption-wrap"><a class="navbar-caption text-black text-primary display-4" href="page3.html">AlertSense</a></span>
+        </div>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-bs-toggle="collapse" data-target="#navbarSupportedContent" data-bs-target="#navbarSupportedContent" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+          <div class="hamburger">
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+          </div>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav nav-dropdown" data-app-modern-menu="true">
+          </ul>
+          <div class="navbar-buttons mbr-section-btn"><a class="btn btn-primary display-4" href="page3.html">Control Panel</a></div>
+        </div>
+      </div>
+    </nav>
+  </section>
+  <section data-bs-version="5.1" class="features20 cid-tUu7U9pDpw" id="features026-23">
+    <div class="container">
+      <div class="row mb-5 justify-content-center">
+        <div class="col-12 mb-0 content-head">
+          <h3 class="mbr-section-title mbr-fonts-style align-center display-2">
+            <strong><br></strong><strong>Control Panel</strong></h3>
+        </div>
+      </div>
+      <div class="row">
+        <div class="item features-without-image col-12 col-md-6 col-lg-6">
+          <div class="item-wrapper">
+            <div class="card-box align-left">
+              <h5 class="card-title mbr-fonts-style display-5">
+                <strong>Activate System</strong></h5>
+              <p class="card-text mbr-fonts-style display-7">Utilize this button to activate the alarm system.</p>
+              <div class="mbr-section-btn mt-auto"><button id="activateAlarmButton" class="btn btn-lg btn-primary display-7">Activate</button></div>
+            </div>
+          </div>
+        </div>
+        <div class="item features-without-image col-12 col-md-6 col-lg-6">
+          <div class="item-wrapper">
+            <div class="card-box align-left">
+              <h5 class="card-title mbr-fonts-style display-5">
+                <strong>Sensor Settings</strong></h5>
+              <p class="card-text mbr-fonts-style display-7">Utilize this button to activate or deactivate sensors.</p>
+              <div class="mbr-section-btn mt-auto"><a class="btn btn-lg btn-primary display-7" href="page7.html" target="_blank">Click Here</a></div>
+            </div>
+          </div>
+        </div>
+        <div class="item features-without-image col-12 col-md-6 col-lg-6">
+          <div class="item-wrapper">
+            <div class="card-box align-left">
+              <h5 class="card-title mbr-fonts-style display-5">
+                <strong>Set Alarms</strong></h5>
+              <p class="card-text mbr-fonts-style display-7">
+                Utilize this button to set alarms.<br></p>
+              <div class="mbr-section-btn mt-auto"><a class="btn btn-lg btn-primary display-7" href="page5.html" target="_blank">Click Here</a></div>
+            </div>
+          </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <script>
+    let systemActivated = false;
+
+    document.getElementById("activateAlarmButton").addEventListener("click", function() {
+      sendBLECommand();
+    });
+
+    function sendBLECommand() {
+      const serviceUUID = "19b10000-e8f2-537e-4f6c-d104768a1215"; // UUID for the BLE service
+      const characteristicUUID = "19b10001-e8f2-537e-4f6c-d104768a1215"; // UUID for the BLE characteristic
+
+      navigator.bluetooth.requestDevice({ filters: [{ services: [serviceUUID] }] })
+        .then(device => device.gatt.connect())
+        .then(server => server.getPrimaryService(serviceUUID))
+        .then(service => service.getCharacteristic(characteristicUUID))
+        .then(characteristic => {
+          const action = systemActivated ? 0 : 1; // Toggle action based on system activation status
+          const data = new Uint8Array([action]);
+          return characteristic.writeValue(data);
+        })
+        .then(() => {
+          systemActivated = !systemActivated; // Toggle system activation status
+          const button = document.getElementById("activateAlarmButton");
+          button.innerText = systemActivated ? "Deactivate" : "Activate";
+          console.log("BLE command sent successfully.");
+        })
+        .catch(error => {
+          console.error("Error sending BLE command:", error);
+        });
+    }
+</script>
+
+</body>
+</html>
