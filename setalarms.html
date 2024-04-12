@@ -43,5 +43,162 @@
       display: flex;
       justify-content: center;
     }
+    .footer {
+    width: 100%;
+    padding: 20px 0;
+    background-color: #f8f9fa; /* Light gray background */
+    border-top: 1px solid #e7e7e7; /* Subtle top border */
+    display: flex;
+    justify-content: center; /* Center content horizontally */
+    align-items: center; /* Center content vertically */
+  }
+
+  .footer img {
+    height: auto; /* Fixed height to maintain aspect ratio */
+    width: auto; /* Width auto ensures the image does not stretch */
+  
+  }
+  .navbar {
+      margin-bottom: 0; /* Removes default margin below the navbar */
+    }
+
+    .features20 {
+      padding-top: 10px; /* Reduces the top padding */
+    }
+
+    .mbr-section-title {
+      margin-top: 0; /* Removes any top margin from the title */
+      padding-top: 0; /* Minimizes padding at the top of the title */
+    }
+    .features20 {
+    padding-bottom: 50px; /* Adds substantial space at the bottom of the content */
+  }
+  
   </style>
   
+  
+  
+  
+</head>
+<body>
+  
+  <section data-bs-version="5.1" class="menu menu2 cid-tUu7U96mZM" once="menu" id="menu02-22">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <div class="container-fluid">
+        <!-- Centered Main Menu Button -->
+        <div class="mx-auto">
+          <a class="nav-link btn btn-primary text-white" href="index.html">Main Menu</a>
+        </div>
+      </div>
+    </nav>
+    
+  </section>
+  
+  <section data-bs-version="5.1" class="features20 cid-tUu8JhJmJy" id="features026-25">
+
+    <div class="container">
+        <div class="mbr-section-head mb-5">
+            <h3 class="mbr-section-title mbr-fonts-style align-center mb-0 display-2">
+                <br><strong>Set Alarms</strong></h3>
+            <h4 class="mbr-section-subtitle mbr-fonts-style align-center mb-0 mt-4 display-7"> Please enter your alarm time in the following blank and select AM or PM! </h4>
+        </div>
+        <div class="row justify-content-center mt-4">
+            <div class="col-lg-8 mx-auto mbr-form" data-form-type="formoid">
+                <form action="page5.html" method="POST" class="mbr-form form-with-styler" data-form-title="Form Name">
+                    <input type="hidden" name="email" data-form-email="true"
+                        value="Xq0Gi6nC7nUOzU/Fp4R5QoTJC+/HSG4/0LRJYruTb9Z+pqhH3V1gb00zLEiD9H0dvpCrWFFjNXjzljaIGTCU8mvNJY5pYRAkBw5elacBOst2McjGQ7n1ivo6jQsGQspW">
+                    <div class="row">
+                        <div hidden="hidden" data-form-alert="" class="alert alert-success col-12"
+                            id="successMessage">Your alarm has been set!</div>
+                        <div hidden="hidden" data-form-alert-danger="" class="alert alert-danger col-12"
+                            id="errorMessage">
+                            Oops...! some problem!
+                        </div>
+                    </div>
+                    <div class="dragArea row">
+                        <div class="col-8 form-group mb-3" data-for="textarea">
+                            <textarea name="textarea" placeholder="Example: 9:30" data-form-field="textarea"
+                                class="form-control" id="textarea-form02-6"></textarea>
+                        </div>
+                        <div class="col-4 form-group mb-3" data-for="select">
+                            <select class="form-control" name="select" data-form-field="select" id="select-form02-6">
+                                <option value="AM">AM</option>
+                                <option value="PM">PM</option>
+                            </select>
+                        </div>
+                        <div class="col-lg-12 col-md-12 col-sm-12 align-center mbr-section-btn">
+                            <button type="submit" button id="setAlarm"class="btn btn-primary display-7">Set Alarm</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script>
+  window.onload = function() {
+    const setAlarmButton = document.getElementById("setAlarm");
+
+    setAlarmButton.addEventListener("click", function(event) {
+      event.preventDefault();  // Prevent the default form submission behavior
+      console.log("Button clicked!"); // Verify button click
+
+      const timeString = document.getElementById("textarea-form02-6").value;
+      const period = document.getElementById("select-form02-6").value;
+
+      if (!isValidTime(timeString)) {
+        alert("Please enter the time in the correct format.");
+        return;
+      }
+
+      const serviceUUID = "19b10000-e8f2-537e-4f6c-d104768a1215";
+      const characteristicUUID = "19b10002-e8f2-537e-4f6c-d104768a1215";
+
+      console.log("Requesting Bluetooth device...");
+      navigator.bluetooth.requestDevice({ filters: [{ services: [serviceUUID] }] })
+        .then(device => {
+          console.log('Device discovered:', device.name);
+          return device.gatt.connect();
+        })
+        .then(server => {
+          console.log('Connected to server');
+          return server.getPrimaryService(serviceUUID);
+        })
+        .then(service => {
+          console.log('Service found');
+          return service.getCharacteristic(characteristicUUID);
+        })
+        .then(characteristic => {
+          console.log('Characteristic obtained, sending data...');
+          const encoder = new TextEncoder();
+          const data = encoder.encode(timeString + period);
+          return characteristic.writeValue(data);
+        })
+        .then(() => {
+          console.log("BLE command sent successfully.");
+          alert("Alarm set successfully!");
+        })
+        .catch(error => {
+          console.error("Error during BLE operation:", error);
+          alert("Failed to set alarm: " + error.message); // Displaying the error message to the user for better troubleshooting
+        });
+    });
+
+    function isValidTime(timeString) {
+      const timeRegex = /^(0?[1-9]|1[0-2]):[0-5][0-9]$/;
+      return timeRegex.test(timeString);
+    }
+  }
+</script>
+
+<footer class="footer">
+  <a href="index.html">
+    <img src="assets/images/alertsense-cover-96x96.png" alt="AlertSense Logo" style="height: 3rem;">
+  </a>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>
