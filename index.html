@@ -18,33 +18,48 @@
   <link rel="preload" href="https://fonts.googleapis.com/css?family=Inter+Tight:100,200,300,400,500,600,700,800,900,100i,200i,300i,400i,500i,600i,700i,800i,900i&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
   <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter+Tight:100,200,300,400,500,600,700,800,900,100i,200i,300i,400i,500i,600i,700i,800i,900i&display=swap"></noscript>
   <link rel="preload" as="style" href="assets/mobirise/css/mbr-additional.css"><link rel="stylesheet" href="assets/mobirise/css/mbr-additional.css" type="text/css">
+  <style>
+    .nav-link {
+      text-align: center;
+      background-color: #007bff; /* Bootstrap primary blue color */
+      color: white;
+      border-radius: 30px; /* Increased for softer, more rounded edges */
+      padding: 10px 30px; /* Increased horizontal padding for a wider oval */
+      text-decoration: none;
+      display: inline-block; /* Ensures proper display of padding and border-radius */
+      font-size: 16px; /* Optional: Adjust font size for better visual compatibility */
+      transition: background-color 0.3s; /* Smooth transition for hover effects */
+    }
+  
+    .nav-link:hover {
+      background-color: #0056b3; /* Darker blue on hover for better user feedback */
+    }
+  
+    .mx-auto {
+      flex-grow: 1;
+      display: flex;
+      justify-content: center;
+    }
+  </style>
+  
+  
 </head>
 <body>
   <section data-bs-version="5.1" class="menu menu2 cid-tUu7U96mZM" once="menu" id="menu02-22">
-    <nav class="navbar navbar-dropdown navbar-fixed-top navbar-expand-lg">
-      <div class="container">
-        <div class="navbar-brand">
-          <span class="navbar-logo">
-            <a href="index.html">
-              <img src="assets/images/alertsense-cover-96x96.png" alt="Team Alpha" style="height: 3rem;">
-            </a>
-          </span>
-          <span class="navbar-caption-wrap"><a class="navbar-caption text-black text-primary display-4" href="index.html">Press to go to the Main Menu</a></span>
-        </div>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-bs-toggle="collapse" data-target="#navbarSupportedContent" data-bs-target="#navbarSupportedContent" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-          <div class="hamburger">
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-          </div>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-          <ul class="navbar-nav nav-dropdown" data-app-modern-menu="true">
-          </ul>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <div class="container-fluid">
+        <!-- Logo on the left -->
+        <a class="navbar-brand" href="index.html">
+          <img src="assets/images/alertsense-cover-96x96.png" alt="Team Alpha" style="height: 3rem;">
+        </a>
+        
+        <!-- Centered Main Menu Button -->
+        <div class="mx-auto">
+          <a class="nav-link btn btn-primary text-white" href="index.html">Main Menu</a>
         </div>
       </div>
     </nav>
+    
   </section>
   <section data-bs-version="5.1" class="features20 cid-tUu7U9pDpw" id="features026-23">
     <div class="container">
