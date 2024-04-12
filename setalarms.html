@@ -21,143 +21,27 @@
   <link rel="preload" href="https://fonts.googleapis.com/css?family=Inter+Tight:100,200,300,400,500,600,700,800,900,100i,200i,300i,400i,500i,600i,700i,800i,900i&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
   <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter+Tight:100,200,300,400,500,600,700,800,900,100i,200i,300i,400i,500i,600i,700i,800i,900i&display=swap"></noscript>
   <link rel="preload" as="style" href="assets/mobirise/css/mbr-additional.css"><link rel="stylesheet" href="assets/mobirise/css/mbr-additional.css" type="text/css">
-
-  
-  
-  
-</head>
-<body>
-  
-    <section data-bs-version="5.1" class="menu menu2 cid-tUu7U96mZM" once="menu" id="menu02-22">
-        <nav class="navbar navbar-dropdown navbar-fixed-top navbar-expand-lg">
-          <div class="container">
-            <div class="navbar-brand">
-              <span class="navbar-logo">
-                <a href="index.html">
-                  <img src="assets/images/alertsense-cover-96x96.png" alt="Team Alpha" style="height: 3rem;">
-                </a>
-              </span>
-              <span class="navbar-caption-wrap"><a class="navbar-caption text-black text-primary display-4" href="index.html">Press to go to the Main Menu</a></span>
-            </div>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-bs-toggle="collapse" data-target="#navbarSupportedContent" data-bs-target="#navbarSupportedContent" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-              <div class="hamburger">
-                <span></span>
-                <span></span>
-                <span></span>
-                <span></span>
-              </div>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-              <ul class="navbar-nav nav-dropdown" data-app-modern-menu="true">
-              </ul>
-            </div>
-          </div>
-        </nav>
-      </section>
-
-
-
-<section data-bs-version="5.1" class="features20 cid-tUu8JhJmJy" id="features026-25">
-
-    <div class="container">
-        <div class="mbr-section-head mb-5">
-            <h3 class="mbr-section-title mbr-fonts-style align-center mb-0 display-2">
-                <br><strong>Set Alarms</strong></h3>
-            <h4 class="mbr-section-subtitle mbr-fonts-style align-center mb-0 mt-4 display-7"> Please enter your alarm time in the following blank and select AM or PM! </h4>
-        </div>
-        <div class="row justify-content-center mt-4">
-            <div class="col-lg-8 mx-auto mbr-form" data-form-type="formoid">
-                <form action="page5.html" method="POST" class="mbr-form form-with-styler" data-form-title="Form Name">
-                    <input type="hidden" name="email" data-form-email="true"
-                        value="Xq0Gi6nC7nUOzU/Fp4R5QoTJC+/HSG4/0LRJYruTb9Z+pqhH3V1gb00zLEiD9H0dvpCrWFFjNXjzljaIGTCU8mvNJY5pYRAkBw5elacBOst2McjGQ7n1ivo6jQsGQspW">
-                    <div class="row">
-                        <div hidden="hidden" data-form-alert="" class="alert alert-success col-12"
-                            id="successMessage">Your alarm has been set!</div>
-                        <div hidden="hidden" data-form-alert-danger="" class="alert alert-danger col-12"
-                            id="errorMessage">
-                            Oops...! some problem!
-                        </div>
-                    </div>
-                    <div class="dragArea row">
-                        <div class="col-8 form-group mb-3" data-for="textarea">
-                            <textarea name="textarea" placeholder="Example: 9:30" data-form-field="textarea"
-                                class="form-control" id="textarea-form02-6"></textarea>
-                        </div>
-                        <div class="col-4 form-group mb-3" data-for="select">
-                            <select class="form-control" name="select" data-form-field="select" id="select-form02-6">
-                                <option value="AM">AM</option>
-                                <option value="PM">PM</option>
-                            </select>
-                        </div>
-                        <div class="col-lg-12 col-md-12 col-sm-12 align-center mbr-section-btn">
-                            <button type="submit" button id="setAlarm"class="btn btn-primary display-7">Set Alarm</button>
-                        </div>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-</section>
-
-<script>
-  window.onload = function() {
-    const setAlarmButton = document.getElementById("setAlarm");
-
-    setAlarmButton.addEventListener("click", function(event) {
-      event.preventDefault();  // Prevent the default form submission behavior
-      console.log("Button clicked!"); // Verify button click
-
-      const timeString = document.getElementById("textarea-form02-6").value;
-      const period = document.getElementById("select-form02-6").value;
-
-      if (!isValidTime(timeString)) {
-        alert("Please enter the time in the correct format.");
-        return;
-      }
-
-      const serviceUUID = "19b10000-e8f2-537e-4f6c-d104768a1215";
-      const characteristicUUID = "19b10002-e8f2-537e-4f6c-d104768a1215";
-
-      console.log("Requesting Bluetooth device...");
-      navigator.bluetooth.requestDevice({ filters: [{ services: [serviceUUID] }] })
-        .then(device => {
-          console.log('Device discovered:', device.name);
-          return device.gatt.connect();
-        })
-        .then(server => {
-          console.log('Connected to server');
-          return server.getPrimaryService(serviceUUID);
-        })
-        .then(service => {
-          console.log('Service found');
-          return service.getCharacteristic(characteristicUUID);
-        })
-        .then(characteristic => {
-          console.log('Characteristic obtained, sending data...');
-          const encoder = new TextEncoder();
-          const data = encoder.encode(timeString + period);
-          return characteristic.writeValue(data);
-        })
-        .then(() => {
-          console.log("BLE command sent successfully.");
-          alert("Alarm set successfully!");
-        })
-        .catch(error => {
-          console.error("Error during BLE operation:", error);
-          alert("Failed to set alarm: " + error.message); // Displaying the error message to the user for better troubleshooting
-        });
-    });
-
-    function isValidTime(timeString) {
-      const timeRegex = /^(0?[1-9]|1[0-2]):[0-5][0-9]$/;
-      return timeRegex.test(timeString);
+  <style>
+    .nav-link {
+      text-align: center;
+      background-color: #007bff; /* Bootstrap primary blue color */
+      color: white;
+      border-radius: 30px; /* Increased for softer, more rounded edges */
+      padding: 10px 30px; /* Increased horizontal padding for a wider oval */
+      text-decoration: none;
+      display: inline-block; /* Ensures proper display of padding and border-radius */
+      font-size: 16px; /* Optional: Adjust font size for better visual compatibility */
+      transition: background-color 0.3s; /* Smooth transition for hover effects */
     }
-  }
-</script>
-
-
-
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
-</body>
-
-</html>
+  
+    .nav-link:hover {
+      background-color: #0056b3; /* Darker blue on hover for better user feedback */
+    }
+  
+    .mx-auto {
+      flex-grow: 1;
+      display: flex;
+      justify-content: center;
+    }
+  </style>
+  
