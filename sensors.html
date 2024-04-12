@@ -21,6 +21,22 @@
   <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter+Tight:100,200,300,400,500,600,700,800,900,100i,200i,300i,400i,500i,600i,700i,800i,900i&display=swap"></noscript>
   <link rel="preload" as="style" href="assets/mobirise/css/mbr-additional.css"><link rel="stylesheet" href="assets/mobirise/css/mbr-additional.css" type="text/css">
   <style>
+.features20 {
+    margin-top: 10px; /* Reduce the top margin to bring the section closer to the navbar */
+    padding-top: 10px; 
+}
+.features20 {
+    padding-bottom: 50px; /* Adds substantial space at the bottom of the content */
+  }
+
+html, body {
+  height: 100%; /* Full height to the root elements */
+  margin: 0; /* Removes default margin */
+}
+body {
+  display: flex;
+  flex-direction: column; /* Stacks content vertically */
+}
     .nav-link {
       text-align: center;
       background-color: #007bff; /* Bootstrap primary blue color */
@@ -42,6 +58,22 @@
       display: flex;
       justify-content: center;
     }
+	.footer {
+    width: 100%;
+    padding: 20px 0;
+    background-color: #f8f9fa; /* Light gray background */
+    border-top: 1px solid #e7e7e7; /* Subtle top border */
+    display: flex;
+    justify-content: center; /* Center content horizontally */
+    align-items: center; /* Center content vertically */
+  }
+
+  .footer img {
+    height: auto; /* Fixed height to maintain aspect ratio */
+    width: auto; /* Width auto ensures the image does not stretch */
+
+  
+  }
   </style>
   
   
@@ -51,18 +83,13 @@
   
 	<section data-bs-version="5.1" class="menu menu2 cid-tUu7U96mZM" once="menu" id="menu02-22">
 		<nav class="navbar navbar-expand-lg navbar-light bg-light">
-		  <div class="container-fluid">
-			<!-- Logo on the left -->
-			<a class="navbar-brand" href="index.html">
-			  <img src="assets/images/alertsense-cover-96x96.png" alt="Team Alpha" style="height: 3rem;">
-			</a>
-			
-			<!-- Centered Main Menu Button -->
-			<div class="mx-auto">
-			  <a class="nav-link btn btn-primary text-white" href="index.html">Main Menu</a>
+			<div class="container-fluid">
+			  <!-- Centered Main Menu Button -->
+			  <div class="mx-auto">
+				<a class="nav-link btn btn-primary text-white" href="index.html">Main Menu</a>
+			  </div>
 			</div>
-		  </div>
-		</nav>
+		  </nav>
 		
 	  </section>
 <section data-bs-version="5.1" class="features20 cid-tUu8Syuz5z" id="features026-2b">
@@ -193,7 +220,11 @@ input:checked + .slider:before {
 }
 	  </style>
 	  <input name="animation" type="hidden">
-
+	  <footer class="footer">
+		<a href="index.html">
+		  <img src="assets/images/alertsense-cover-96x96.png" alt="AlertSense Logo" style="height: 3rem;">
+		</a>
+	  </footer>
 	  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
 	</body>
 	</html>
