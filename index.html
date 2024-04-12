@@ -35,11 +35,38 @@
       background-color: #0056b3; /* Darker blue on hover for better user feedback */
     }
   
-    .mx-auto {
-      flex-grow: 1;
-      display: flex;
-      justify-content: center;
+    .footer {
+    width: 100%;
+    padding: 20px 0;
+    background-color: #f8f9fa; /* Light gray background */
+    border-top: 1px solid #e7e7e7; /* Subtle top border */
+    display: flex;
+    justify-content: center; /* Center content horizontally */
+    align-items: center; /* Center content vertically */
+  }
+
+  .footer img {
+    height: auto; /* Fixed height to maintain aspect ratio */
+    width: auto; /* Width auto ensures the image does not stretch */
+  
+  }
+  .navbar {
+      margin-bottom: 0; /* Removes default margin below the navbar */
     }
+
+    .features20 {
+      padding-top: 5px; /* Reduces the top padding */
+    }
+
+    .mbr-section-title {
+      margin-top: 0; /* Removes any top margin from the title */
+      padding-top: 0; /* Minimizes padding at the top of the title */
+    }
+
+    .features20 {
+    padding-bottom: 50px; /* Adds substantial space at the bottom of the content */
+  }
+    
   </style>
   
   
@@ -48,11 +75,6 @@
   <section data-bs-version="5.1" class="menu menu2 cid-tUu7U96mZM" once="menu" id="menu02-22">
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
       <div class="container-fluid">
-        <!-- Logo on the left -->
-        <a class="navbar-brand" href="index.html">
-          <img src="assets/images/alertsense-cover-96x96.png" alt="Team Alpha" style="height: 3rem;">
-        </a>
-        
         <!-- Centered Main Menu Button -->
         <div class="mx-auto">
           <a class="nav-link btn btn-primary text-white" href="index.html">Main Menu</a>
@@ -136,6 +158,13 @@
         });
     }
 </script>
+<!-- Footer Section with Logo -->
+<footer class="footer">
+  <a href="index.html">
+    <img src="assets/images/alertsense-cover-96x96.png" alt="AlertSense Logo" style="height: 3rem;">
+  </a>
+</footer>
+
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
