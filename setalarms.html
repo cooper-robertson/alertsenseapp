@@ -57,13 +57,13 @@
 
 
 
-<section data-bs-version="5.1" class="form5 cid-tJS9pBcTSa" id="form02-6">
+<section data-bs-version="5.1" class="features20 cid-tUu8JhJmJy" id="features026-25">
 
     <div class="container">
         <div class="mbr-section-head mb-5">
             <h3 class="mbr-section-title mbr-fonts-style align-center mb-0 display-2">
                 <br><strong>Set Alarms</strong></h3>
-            <h4 class="mbr-section-subtitle mbr-fonts-style align-center mb-0 mt-4 display-7"> Please enter your alarm time in the following blank in Hours:Minutes military time format! </h4>
+            <h4 class="mbr-section-subtitle mbr-fonts-style align-center mb-0 mt-4 display-7"> Please enter your alarm time in the following blank and select AM or PM! </h4>
         </div>
         <div class="row justify-content-center mt-4">
             <div class="col-lg-8 mx-auto mbr-form" data-form-type="formoid">
@@ -79,9 +79,15 @@
                         </div>
                     </div>
                     <div class="dragArea row">
-                        <div class="col-12 form-group mb-3" data-for="textarea">
-                            <textarea name="textarea" placeholder="Example: 14:30" data-form-field="textarea"
+                        <div class="col-8 form-group mb-3" data-for="textarea">
+                            <textarea name="textarea" placeholder="Example: 9:30" data-form-field="textarea"
                                 class="form-control" id="textarea-form02-6"></textarea>
+                        </div>
+                        <div class="col-4 form-group mb-3" data-for="select">
+                            <select class="form-control" name="select" data-form-field="select" id="select-form02-6">
+                                <option value="AM">AM</option>
+                                <option value="PM">PM</option>
+                            </select>
                         </div>
                         <div class="col-lg-12 col-md-12 col-sm-12 align-center mbr-section-btn">
                             <button type="submit" button id="setAlarm"class="btn btn-primary display-7">Set Alarm</button>
@@ -94,14 +100,64 @@
 </section>
 
 <script>
-	document.getElementById("setAlarm").addEventListener("click", function() {
-	// Send a signal to activate the alarm system
-	// Replace the following line with actual code to activate your alarm system.
-	// For demonstration, an alert is used to notify the user.
-	alert("The alarm has been set!");
-	});
+  window.onload = function() {
+    const setAlarmButton = document.getElementById("setAlarm");
 
+    setAlarmButton.addEventListener("click", function(event) {
+      event.preventDefault();  // Prevent the default form submission behavior
+      console.log("Button clicked!"); // Verify button click
+
+      const timeString = document.getElementById("textarea-form02-6").value;
+      const period = document.getElementById("select-form02-6").value;
+
+      if (!isValidTime(timeString)) {
+        alert("Please enter the time in the correct format.");
+        return;
+      }
+
+      const serviceUUID = "19b10000-e8f2-537e-4f6c-d104768a1215";
+      const characteristicUUID = "19b10002-e8f2-537e-4f6c-d104768a1215";
+
+      console.log("Requesting Bluetooth device...");
+      navigator.bluetooth.requestDevice({ filters: [{ services: [serviceUUID] }] })
+        .then(device => {
+          console.log('Device discovered:', device.name);
+          return device.gatt.connect();
+        })
+        .then(server => {
+          console.log('Connected to server');
+          return server.getPrimaryService(serviceUUID);
+        })
+        .then(service => {
+          console.log('Service found');
+          return service.getCharacteristic(characteristicUUID);
+        })
+        .then(characteristic => {
+          console.log('Characteristic obtained, sending data...');
+          const encoder = new TextEncoder();
+          const data = encoder.encode(timeString + period);
+          return characteristic.writeValue(data);
+        })
+        .then(() => {
+          console.log("BLE command sent successfully.");
+          alert("Alarm set successfully!");
+        })
+        .catch(error => {
+          console.error("Error during BLE operation:", error);
+          alert("Failed to set alarm: " + error.message); // Displaying the error message to the user for better troubleshooting
+        });
+    });
+
+    function isValidTime(timeString) {
+      const timeRegex = /^(0?[1-9]|1[0-2]):[0-5][0-9]$/;
+      return timeRegex.test(timeString);
+    }
+  }
 </script>
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 
 </html>
